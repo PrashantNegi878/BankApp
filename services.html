@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MyBank | Services</title>
+		<meta charset="UTF-8">
+        <link rel="stylesheet" href="css.css">
+
+        <style>
+            h1{
+                text-align: center;
+            }
+            table{
+                margin-left: auto;
+                margin-right: auto;
+                border: 5px solid blue;
+            }
+
+            td{
+                border: 1px solid black;
+                padding: 2%;
+                width: 20%;
+                background-color: aqua;
+                text-align: center;
+            }
+
+
+            input[type="text"]
+            {
+                background-color: yellow;
+                color: green;
+                border-radius: 2%;
+                width: 70%;
+                height: 1.2rem;
+                border: 0;
+                text-align: center;
+            }
+
+            select
+            {
+                background-color: green;
+                color: yellow;
+                border-radius: 2%;
+                width: 70%;
+                height: 1.2rem;
+                border: 0;
+                text-align: center;
+            }
+
+            #submit{
+                background-color: green;
+                color: yellow;
+                border-radius: 1%;
+                width: 20%;
+                height: 2rem;
+                border: 0;
+            }
+
+            input[type="text"]:hover{
+                background-color: yellowgreen;
+            }
+
+            input[disabled]{
+                background-color: black;
+                color:white ;
+            }
+
+            #submit:hover{
+                background-color: red;
+            }
+
+            h1,table,input,select{
+                font-size: 1rem;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            }
+
+            #heading{
+                font-size: 2rem;
+                color: green;
+            }
+
+            #warning
+            {
+                background-color: red;
+            }
+        </style>
+
+
+	</head>
+	<body >
+        <header>
+            <center>
+            <h1>MY BANK SERVICES PAGE</h1>
+            </center>
+        </header>
+        <br>
+        <center>
+        <br><a href="index.html"><input type="button" value="Home"></a>
+        <br>
+        <br><a href="aboutus.html"><input type="button" value="About Us"></a>
+        <br>
+        <br><a href="login.html"><input type="button" value="Net Banking"></a>
+        <br>
+        <br><a href="contactus.html"><input type="button" value="Contact Us"></a>
+        <br>
+        </center>
+        <center>
+            <h1>SERVICES</h1>
+        </center>
+
+
+        <br>
+        <br>
+        <h1 id="heading" onclick="showCalc()">LOAN CALCULATOR</h1>
+        <div id="showhere"></div>
+        
+    <script>
+
+        var flag = true;
+        
+        function showCalc()
+        {
+
+
+            var s=`<form name="f" action="javascript:calculate()">
+        <table>
+            <tr>
+                <td>Applicant Name</td>
+                <td><input type="text" placeholder="Enter your Name" required></td>
+            </tr>
+            <tr>
+                <td>Loan Type</td>
+                <td><select name="type" id="type" onchange="addRange(this.value)">
+                    <option value="home">Home</option>
+                    <option value="car">Car</option>
+                    <option value="personal">Personal</option>
+                  </select></td>
+            </tr>
+            <tr>
+                <td>Amount</td>
+                <td><input id="amount" type="text" placeholder="Enter Amount in Rupees" required></td>
+            </tr>
+            <tr>
+                <td>Rate Of Interest</td>
+                <td><input id="roi" type="text" disabled></td>
+            </tr>
+            <tr>
+                <td>Duration</td>
+                <td>
+                        <input id="duration" type="text" required>
+                </td>
+            </tr>
+            <tr>
+                <td>EMI</td>
+                <td><input id="emi" type="text" disabled></td>
+            </tr>
+        </table>
+        <br>
+        <center><input type="submit" id="submit"  value="Calculate" ><br>
+            <!-- onclick="calculate()" -->
+            <br>
+        <label id="messg">.</label></center>
+    </form>`
+    if(flag)
+       { document.getElementById("showhere").innerHTML=s;
+        flag=!flag;}
+    else
+    {document.getElementById("showhere").innerHTML="";
+    flag=!flag}
+
+        }
+        function calculate()
+        {
+        document.getElementById("messg").innerHTML="";
+        var loantype=document.getElementById("type").value;
+        var roi=0;
+        if (loantype=="home")
+        roi=7;
+        else if (loantype=="car")
+        roi=9;
+        else
+        roi=12;
+        document.getElementById("roi").value=roi+" %";
+        var temp=roi;
+        roi=roi/12/100;
+        var amount=parseInt(document.getElementById("amount").value);
+        var duration=parseInt(document.getElementById("duration").value);
+        var years=duration;
+        var duration=duration/12;
+        var emi=amount*roi*(Math.pow((1+roi),duration))/(Math.pow((1+roi),(duration)-1));
+        if((temp==7 && years<=25)||(temp==9 && years<=7)||(temp==12 && years<=5))
+        document.getElementById("emi").value=emi+" Rs";
+        else
+        document.getElementById("messg").innerHTML="<div id='warning'><font color='black'> ***Duration Not Allowed*** <br>Allowed Duration for Home Loan - 1 to 25 Years <br>Allowed Duration for Car Loan - 1 to 7 Years<br>Allowed Duration for Personal Loan - 1 to 5 Years</div>";
+
+    }
+    </script>
+
+
+        <footer>
+        <center>
+            <h3>Copyright© 2022 . All rights Reserved.</h3>
+            <p>Last Updated: 08-07-2022 | Maintained by Cyfuture & Hosted at Cyfuture Cloud</p>
+            </center>
+        </footer>
+
+
+	</body>
+</html>
